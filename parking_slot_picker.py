@@ -2,12 +2,13 @@ import cv2 as cv
 import pickle
 
 try:
+    # read pickle
     with open('car_positions', 'rb') as file:
             pos_list = pickle.load(file)
 except:
     pos_list = []
 
-
+# value to play around
 width, height = 107, 48
 
 

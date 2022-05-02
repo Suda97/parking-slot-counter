@@ -5,9 +5,11 @@ import pickle
 # read video
 cap = cv.VideoCapture('media/carPark.mp4')
 
+# read pickle
 with open('car_positions', 'rb') as file:
     pos_list = pickle.load(file)
 
+# value to play around
 width, height = 107, 48
 
 def check_parking_space(frame_processed):
@@ -15,10 +17,11 @@ def check_parking_space(frame_processed):
 
     for pos in pos_list:
         x, y = pos
-        frame_crop = frame_processed[y:y+height, x:x+width]
-        count = cv.countNonZero(frame_crop)
+        frame_cropped = frame_processed[y:y+height, x:x+width]
+        count = cv.countNonZero(frame_cropped)
         cv.putText(frame, str(count), (x, y+height-10), cv.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
     
+        # value to play around
         if count < 890:
             color = (0, 255, 0)
             space_counter += 1
@@ -34,7 +37,7 @@ while True:
         cap.set(cv.CAP_PROP_POS_FRAMES, 0)
     success, frame = cap.read()
 
-    # whole frame processing 
+    # whole frame processing also some values to play around
     frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     frame_blur = cv.GaussianBlur(frame_gray, (3,3), 1)
     frame_threshold = cv.adaptiveThreshold(frame_blur, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY_INV, 25, 16)
